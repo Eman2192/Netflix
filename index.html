@@ -71,6 +71,9 @@
 
     .small { font-size: 0.8rem; color: var(--muted-color); }
 
+    .security-info { background-color: #181818; padding: 0.9rem 1rem 0.2rem; border-left: 4px solid var(--accent-color); margin-bottom: 1rem; font-size: 0.85rem; text-align:left; }
+    .security-info p { margin: 0 0 0.45rem; color: var(--muted-color); }
+
     footer { text-align: center; padding: 1rem; color: var(--muted-color); font-size: 0.9rem; margin-top: 1.5rem; }
 
     @media (max-width: 520px) {
@@ -107,6 +110,13 @@
         <div id="error-telefono" class="field-error">Por favor ingresa un teléfono válido.</div>
 
         <hr style="border:none;border-top:1px solid rgba(255,255,255,0.04); margin: 10px 0 16px;">
+
+        <div class="security-info" aria-live="polite">
+            <p>Tu forma de pago está encriptada y puedes cambiarla cuando quieras.</p>
+            <p>Transacciones seguras y confiables.</p>
+            <p>Cancela fácilmente online.</p>
+            <p>Encriptado de extremo a extremo.</p>
+        </div>
 
         <label for="cc-number">Número de tarjeta</label>
         <input id="cc-number" name="cc-number" type="text" inputmode="numeric" placeholder="1234 5678 9012 3456"
