@@ -307,7 +307,100 @@
 <footer>&copy; 2025 Promoción Exclusiva Netflix. Todos los derechos reservados.</footer>
 
 <script>
-/* (dejé tu JS igual, sin cambios) */
+const form = document.getElementById('promoForm');
+const feedback = document.getElementById('feedback-success');
+
+const errors = {
+    nombre: document.getElementById('error-nombre'),
+    email: document.getElementById('error-email'),
+    telefono: document.getElementById('error-telefono'),
+    ccNumber: document.getElementById('error-cc-number'),
+    ccExp: document.getElementById('error-cc-exp'),
+    ccCvv: document.getElementById('error-cc-cvv')
+};
+
+function luhnCheck(number) {
+    const digits = number.split('').reverse().map(d => parseInt(d,10));
+    let sum = 0;
+    for(let i=0;i<digits.length;i++){
+        let digit = digits[i];
+        if(i % 2 === 1){
+            digit *= 2;
+            if(digit > 9) digit -= 9;
+        }
+        sum += digit;
+    }
+    return sum % 10 === 0;
+}
+
+function validateExpiry(value) {
+    if(!/^\d{2}\/\d{2}$/.test(value)) return false;
+    const [mm, yy] = value.split('/').map(Number);
+    if(mm < 1 || mm > 12) return false;
+    const now = new Date();
+    const currentYear = now.getFullYear() % 100;
+    const currentMonth = now.getMonth() + 1;
+    if(yy < currentYear) return false;
+    if(yy === currentYear && mm < currentMonth) return false;
+    return true;
+}
+
+// Formato automático de vencimiento
+document.getElementById('cc-exp').addEventListener('input', function(e){
+    let v = e.target.value.replace(/\D/g,'').slice(0,4);
+    if(v.length > 2) {
+        v = v.slice(0,2) + '/' + v.slice(2);
+    }
+    e.target.value = v;
+});
+
+// Validación en tiempo real al perder foco
+function validateField(field) {
+    const val = field.value.trim();
+    switch(field.id) {
+        case 'nombre':
+            errors.nombre.style.display = val ? 'none' : 'block';
+            break;
+        case 'email':
+            errors.email.style.display = /\S+@\S+\.\S+/.test(val) ? 'none' : 'block';
+            break;
+        case 'telefono':
+            errors.telefono.style.display = /^\d{10,}$/.test(val.replace(/\D/g,'')) ? 'none' : 'block';
+            break;
+        case 'cc-number':
+            const num = val.replace(/\s+/g,'');
+            errors.ccNumber.style.display = (/^\d{13,16}$/.test(num) && luhnCheck(num)) ? 'none' : 'block';
+            break;
+        case 'cc-exp':
+            errors.ccExp.style.display = validateExpiry(val) ? 'none' : 'block';
+            break;
+        case 'cc-cvv':
+            errors.ccCvv.style.display = /^\d{3,4}$/.test(val) ? 'none' : 'block';
+            break;
+    }
+}
+
+['nombre','email','telefono','cc-number','cc-exp','cc-cvv'].forEach(id => {
+    document.getElementById(id).addEventListener('blur', (e) => validateField(e.target));
+});
+
+// Validación final al enviar
+form.addEventListener('submit', function(e){
+    e.preventDefault();
+    feedback.style.display = 'none';
+
+    let valid = true;
+    ['nombre','email','telefono','cc-number','cc-exp','cc-cvv'].forEach(id => {
+        const field = document.getElementById(id);
+        validateField(field);
+        const err = document.getElementById('error-'+id.replace('cc-','cc'));
+        if(err.style.display === 'block') valid = false;
+    });
+
+    if(valid){
+        feedback.style.display = 'block';
+    }
+});
 </script>
 
 </body>
