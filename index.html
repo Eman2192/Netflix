@@ -80,9 +80,36 @@
         .row { flex-direction: column; }
         header h1 { font-size: 2.2rem; }
     }
+
+    /* === Logo arriba a la izquierda === */
+    .logo {
+        position: fixed;
+        top: 12px;
+        left: 16px;
+        z-index: 1000;
+        display: inline-block;
+    }
+    .logo img {
+        height: 58px;
+        width: auto;
+        display: block;
+        filter: drop-shadow(0 4px 10px rgba(0,0,0,0.6));
+        transition: transform 0.25s ease;
+    }
+    .logo img:hover {
+        transform: scale(1.05);
+    }
+    @media (max-width: 480px) {
+        .logo img { height: 44px; }
+    }
 </style>
 </head>
 <body>
+
+<!-- Coloca tu archivo de logo en la raíz del proyecto con el nombre "netflix-logo.png" o ajusta el src -->
+<a class="logo" href="#" aria-label="Inicio Netflix">
+    <img src="logo-netflix.png" alt="Logo de Netflix">
+</a>
 
 <header>
     <h1>Promoción Exclusiva</h1>
