@@ -81,32 +81,34 @@
         header h1 { font-size: 2.2rem; }
     }
 
-    /* === Logo arriba a la izquierda === */
+    /* === Logo arriba a la izquierda (ajustado más grande y fijo) === */
     .logo {
-        position: fixed;
+        position: fixed; /* Mantiene el logo siempre visible sin desplazarse */
         top: 12px;
         left: 16px;
         z-index: 1000;
         display: inline-block;
+        /* Evita cualquier desplazamiento accidental por layout */
+        will-change: transform;
     }
     .logo img {
-        height: 58px;
+        height: 90px; /* Aumentado desde 58px */
         width: auto;
         display: block;
         filter: drop-shadow(0 4px 10px rgba(0,0,0,0.6));
-        transition: transform 0.25s ease;
+        /* Eliminado el hover transform para que no 'se mueva' visualmente */
+        transition: none;
     }
     .logo img:hover {
-        transform: scale(1.05);
+        /* Sin efecto para que no cambie de tamaño */
     }
     @media (max-width: 480px) {
-        .logo img { height: 44px; }
+        .logo img { height: 68px; } /* Aumentado desde 44px */
     }
 </style>
 </head>
 <body>
 
-<!-- Coloca tu archivo de logo en la raíz del proyecto con el nombre "netflix-logo.png" o ajusta el src -->
 <a class="logo" href="#" aria-label="Inicio Netflix">
     <img src="log_net.PNG" alt="Logo de Netflix">
 </a>
