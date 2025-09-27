@@ -81,29 +81,28 @@
         header h1 { font-size: 2.2rem; }
     }
 
-    /* === Logo arriba a la izquierda (ajustado más grande y fijo) === */
+    /* === Logo arriba a la izquierda (ajustado más) ===
+       Se mantiene fijo al hacer scroll y se acercó más al borde,
+       respetando un margen mínimo y áreas seguras en móviles. */
     .logo {
-        position: fixed; /* Mantiene el logo siempre visible sin desplazarse */
-        top: 12px;
-        left: 16px;
+        position: fixed;
+        top: calc(env(safe-area-inset-top, 0px) + 4px);
+        left: calc(env(safe-area-inset-left, 0px) + 8px);
         z-index: 1000;
         display: inline-block;
-        /* Evita cualquier desplazamiento accidental por layout */
         will-change: transform;
     }
     .logo img {
-        height: 90px; /* Aumentado desde 58px */
+        height: 90px;
         width: auto;
         display: block;
         filter: drop-shadow(0 4px 10px rgba(0,0,0,0.6));
-        /* Eliminado el hover transform para que no 'se mueva' visualmente */
         transition: none;
-    }
-    .logo img:hover {
-        /* Sin efecto para que no cambie de tamaño */
+        user-select: none;
+        -webkit-user-drag: none;
     }
     @media (max-width: 480px) {
-        .logo img { height: 68px; } /* Aumentado desde 44px */
+        .logo img { height: 68px; }
     }
 </style>
 </head>
